@@ -4,6 +4,7 @@ title:  "Cheat-Sheets"
 date:   2022-12-27 17:15:00 +0000
 categories: homelab
 tags: homelab cheatsheets docker jekyll ansible helm
+pin: true
 image:
   path: https://media.discordapp.net/attachments/1059461993817448459/1060672530169475072/Fredrik999_thousands_of_white_papers_flying_around_in_the_air_b_f39971ea-759d-495e-ae15-7299b02a42f5.png
 ---
