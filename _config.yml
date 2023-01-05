@@ -80,8 +80,7 @@ theme_mode:   # [light|dark]
 img_cdn:
 
 # the avatar on sidebar, support local or CORS resources
-avatar:
-
+avatar: https://media.discordapp.net/attachments/1039418871024721970/1041824339324047410/Fredrik999_by_Henri_Cartier-Bresson_f3b49064-0ac0-4d52-bd7a-72eba50d8391.png
 # boolean type, the global switch for ToC in posts.
 toc: true
 
