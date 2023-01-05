@@ -3,7 +3,7 @@ layout: post
 title:  "Cheat-Sheets"
 date:   2022-12-27 17:15:00 +0000
 categories: homelab
-tags: homelab cheatsheets docker jekyll ansible
+tags: homelab cheatsheets docker jekyll ansible helm
 image:
   path: https://media.discordapp.net/attachments/1059461993817448459/1060601198232748042/Fredrik999_jekyll_and_hyde_black_background_b1d729ab-d22d-4b26-a33e-6c4494282b69.png
 ---
