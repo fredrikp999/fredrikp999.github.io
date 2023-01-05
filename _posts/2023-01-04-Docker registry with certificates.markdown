@@ -41,6 +41,8 @@ registry:
     - ./certs:/certs
     - ./auth:/auth
 ```
+{: file="docker-compose.yaml" }
+
 Start docker container (detached)
 ```console
 docker-compose up -d

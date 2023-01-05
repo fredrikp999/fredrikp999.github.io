@@ -57,6 +57,8 @@ update file with your details
 # Cloudflare API token used by Certbot
 dns_cloudflare_api_token = YOUR-TOKEN
 ```
+{: file="/root/.secrets/cloudflare.ini" }
+
 ### 4) Secure secrets files
 ```console
 sudo chmod 0700 /root/.secrets/

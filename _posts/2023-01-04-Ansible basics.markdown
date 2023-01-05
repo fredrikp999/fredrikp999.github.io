@@ -15,7 +15,7 @@ image:
 Playbooks can contain all the actions needed, or they can refer to one or more roles
 
 ---
-***Example of playbook "install-heimdall.yaml"***
+***Example of playbook***
 which use a local role (role created by me)
 ```yaml
 ---
@@ -25,8 +25,10 @@ which use a local role (role created by me)
   roles:
     - role: heimdall-role
 ```
+{: file="install-heimdall.yaml" }
+
 ---
-**Example of playbook "install-standardhost.yaml"** 
+**Example of playbook** 
 which use both a local and a community role. The community role have values which can be defined in the playbook. Default values are defined in the role itself.
 
 For community provided roles, see https://galaxy.ansible.com/
@@ -49,6 +51,7 @@ For community provided roles, see https://galaxy.ansible.com/
   roles:
     - role: portaineragent-role
 ```
+{: file="install-standardhost.yaml" }
 
 
 ### Create own role
@@ -61,7 +64,6 @@ The main task is defined in .../roles/portainer-role/tasks/main.yml
 
 Define the task here which for me normally is to use "community.docker.docker_container" to deploy a container, create some folder, perhaps copy some files etc.
 
-.../roles/heimdall-role/tasks/main.yml
 ```yaml
 # tasks file for heimdall-role
 - name: Create data folder for heimdall
@@ -84,3 +86,4 @@ Define the task here which for me normally is to use "community.docker.docker_co
     volumes:
       - ~/services/heimdall/data/config:/config
 ```
+{: file=".../roles/heimdall-role/tasks/main.yml" }
