@@ -2,7 +2,8 @@
 layout: post
 title:  "Wildcard certificate on local services"
 date:   2023-01-04 11:00:10 +0000
-categories: DNS homelab cloudflare certbot
+categories: homelab networking
+tags: homelab DNS cloudflare certbot
 image:
   path: https://media.discordapp.net/attachments/1059461993817448459/1060601382689841234/Fredrik999_signing_document_old_school_black_background_756e7a30-9a9c-4c1a-9696-e2a74473e529.png
 ---

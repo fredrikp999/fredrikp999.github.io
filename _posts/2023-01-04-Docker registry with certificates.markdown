@@ -2,7 +2,8 @@
 layout: post
 title:  "Docker registry with certificates"
 date:   2023-01-04 09:16:00 +0000
-categories: registry docker homelab
+categories: homelab services
+tags: homelab registry docker
 image:
   path: https://media.discordapp.net/attachments/1059461993817448459/1060600794082189384/Fredrik999_a_blue_whale_with_shipping_containers_on_its_back_bl_afb6cf5d-7f47-4543-91b7-2c9254a8d0e9.png
 ---
