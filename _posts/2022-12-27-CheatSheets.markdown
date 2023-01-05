@@ -5,7 +5,7 @@ date:   2022-12-27 17:15:00 +0000
 categories: homelab
 tags: homelab cheatsheets docker jekyll ansible helm
 image:
-  path: https://media.discordapp.net/attachments/1059461993817448459/1060601198232748042/Fredrik999_jekyll_and_hyde_black_background_b1d729ab-d22d-4b26-a33e-6c4494282b69.png
+  path: https://media.discordapp.net/attachments/1059461993817448459/1060672530169475072/Fredrik999_thousands_of_white_papers_flying_around_in_the_air_b_f39971ea-759d-495e-ae15-7299b02a42f5.png
 ---
 
 # Markdown
