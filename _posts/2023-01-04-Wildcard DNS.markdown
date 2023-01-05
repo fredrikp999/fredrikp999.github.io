@@ -75,70 +75,12 @@ If successfully received certificate.
 * Key is saved at: /etc/letsencrypt/live/example.com/privkey.pem
 (Note: These files will be updated when the certificate renews. Certbot has set up a scheduled task to automatically renew this certificate in the background.)
 
-#### Example usage of certs on another server for (docker) registry:
-* create folder for certs
-* copy fullchain.pem and provkey.pem to ./certs
-* for simple test, use docker run
-```console
-docker run -d --restart=always --name registry -v "$(pwd)"/certs:/certs -e REGISTRY_HTTP_ADDR=0.0.0.0:443 -e REGISTRY_HTTP_TLS_CERTIFICATE=/certs/fullchain.pem -e REGISTRY_HTTP_TLS_KEY=/certs/privkey.pem -p 443:443 registry:2
-```
-Or better, use docker-compose + authentication
-
-Create folders + Generate password and store in file
-```console
-mkdir data
-mkdir auth
-mkdir certs
-docker run --entrypoint htpasswd httpd:2 -Bbn yourusername yourpassword > auth/htpasswd
-```
-
-Create docker-compose.yaml
-```yaml
-registry:
-  restart: always
-  image: registry:2
-  ports:
-    - 5000:5000
-  environment:
-    REGISTRY_HTTP_TLS_CERTIFICATE: /certs/fullchain.pem
-    REGISTRY_HTTP_TLS_KEY: /certs/privkey.pem
-    REGISTRY_AUTH: htpasswd
-    REGISTRY_AUTH_HTPASSWD_PATH: /auth/htpasswd
-    REGISTRY_AUTH_HTPASSWD_REALM: Registry Realm
-  volumes:
-    - ./data:/var/lib/registry
-    - ./certs:/certs
-    - ./auth:/auth
-```
-Start docker container (detached)
-```console
-docker-compose up -d
-```
-Now login from somewhere where you want to use this docker registry
-```console
-docker login registry.l.example.com:5000
-```
-(enter username and password)
-
-Verify that you can access the registry. First get the catalogue, then the available tags for the ubuntu image
-```console
-curl -u youruser:yourpass https://l.example.com:5000/v2/_catalog
-curl -u youruser:yourpass https://l.example.com:5000/v2/ubuntu/tags/list
-```
-
-Now try pushing and pulling images. First build or pull an image to your local docker, then tag it for the new local registry and push it
-```console
-docker pull ubuntu:16.04
-docker tag ubuntu:16.04 registry.l.example.com/my-ubuntu:1.0
-docker push ubuntu:16.04 registry.l.example.com/my-ubuntu:1.0
-```
-NOTE: This is not working yet, I get following error message:
-* Get "https://registry.l.example.com/v2/": x509: certificate is not valid for any names, but wanted to match registry.l.example.com
-To be sorted out. Strange as login + curl is working fine with https + fails when cert does not match hostname
-
-
 If service is on same server as the original pem-files, reference these instead.
 Also make sure to apply least privilage approach, lock down the access to the pem-files as much as possible
+
+See examples for how to use the certs
+* directly on the service e.g. a docker registry (link)
+* in a reverse proxy (nginx or traefik - see links)
 
 ### 7) Add DNS-entries to *.l.mydomain.com
  * Simple approach: add A-record for each service. Either in local DNS or in /etc/hosts for easy tests
