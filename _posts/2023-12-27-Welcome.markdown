@@ -1,0 +1,12 @@
+---
+layout: post
+title:  "Welcome"
+date:   2023-01-05 10:15:00 +0000
+categories: chatter
+tags: welcome
+pin: true
+image:
+  path: https://media.discordapp.net/attachments/1059461993817448459/1060495475519795280/Fredrik999_a_super_tasty_pizza_256576dc-dfba-44d2-b08f-09a14f8df030.png
+---
+# What is this blog about
+This blog is used as a personal notebook for me to remember and quickly find how to do stuff. Mainly in my homelab, but potentially also some other stuff. If you have some use of it, feel free to browse around - but I doubt you will find something here which is not better described elsewhere...
