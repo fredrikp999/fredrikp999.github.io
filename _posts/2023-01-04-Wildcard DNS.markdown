@@ -19,7 +19,8 @@ register an A-record for something like local.EXAMPLE.COM or l.EXAMPLE.COM, poin
 
 # Prove you are the owner or the domain using certbot
 ## Install certbot on a local server, not exposed
-This is the recommended, more safe(?) alternative.
+This is a good alternative if you do not want to expose your server which retrieve certificates to the internet. I also adds more possibilites like requesting wildcard entries. It is however not very safe if executing on externally exposed server (e.g. webserver) as the certificates will be stored on the server.
+
 On one server on the local network, install certbot
 (Assuming DNS-provider is cloudflare below)
 
