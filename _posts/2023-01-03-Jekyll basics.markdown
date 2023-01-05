@@ -1,3 +1,9 @@
+---
+layout: post
+title:  "Jekyll basics"
+date:   2023-01-03 07:15:00 +0000
+categories: jekyll
+---
 # Introduction
 # Installation
 # Building
