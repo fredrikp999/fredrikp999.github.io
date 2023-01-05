@@ -32,7 +32,7 @@ In short:
 
 Follow: https://certbot.eff.org/instructions?ws=other&os=ubuntufocal
 in short:
-```console
+```shell
 sudo snap install core; sudo snap refresh core
 sudo apt-get install python3-certbot-dns-cloudflare
 sudo mkdir /root/.secrets/
@@ -50,7 +50,7 @@ API-key is created from cloudflare dashboard
 
 
 ### 3) Configure file for certbot with your credentials
-```console
+```shell
 sudo vi /root/.secrets/cloudflare.ini
 ```
 update file with your details
@@ -61,7 +61,7 @@ dns_cloudflare_api_token = YOUR-TOKEN
 {: file="/root/.secrets/cloudflare.ini" }
 
 ### 4) Secure secrets files
-```console
+```shell
 sudo chmod 0700 /root/.secrets/
 sudo chmod 0400 /root/.secrets/cloudflare.ini
 ```
@@ -69,7 +69,7 @@ sudo chmod 0400 /root/.secrets/cloudflare.ini
 ### 5) Request certificate
 * Request "certificate only"
 
-```console
+```shell
 sudo certbot certonly --dns-cloudflare --dns-cloudflare-credentials /root/.secrets/cloudflare.ini -d example.com,*.example.com,*.l.example.com --preferred-challenges dns-01
  ```
 Note: *.l.example.com (or *.local.example.com if you prefer) is what will be used for local hosts and is what will make it possible to use real certs also for internal services / host names

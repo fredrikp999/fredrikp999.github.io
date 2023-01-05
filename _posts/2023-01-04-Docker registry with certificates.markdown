@@ -11,13 +11,13 @@ image:
 * create folder for certs
 * copy fullchain.pem and provkey.pem to ./certs
 * for simple test, use docker run
-```console
+```shell
 docker run -d --restart=always --name registry -v "$(pwd)"/certs:/certs -e REGISTRY_HTTP_ADDR=0.0.0.0:443 -e REGISTRY_HTTP_TLS_CERTIFICATE=/certs/fullchain.pem -e REGISTRY_HTTP_TLS_KEY=/certs/privkey.pem -p 443:443 registry:2
 ```
 Or better, use docker-compose + authentication
 
 Create folders + Generate password and store in file
-```console
+```shell
 mkdir data
 mkdir auth
 mkdir certs
@@ -45,23 +45,23 @@ registry:
 {: file="docker-compose.yaml" }
 
 Start docker container (detached)
-```console
+```shell
 docker-compose up -d
 ```
 Now login from somewhere where you want to use this docker registry
-```console
+```shell
 docker login registry.l.example.com:5000
 ```
 (enter username and password)
 
 Verify that you can access the registry. First get the catalogue, then the available tags for the ubuntu image
-```console
+```shell
 curl -u youruser:yourpass https://l.example.com:5000/v2/_catalog
 curl -u youruser:yourpass https://l.example.com:5000/v2/ubuntu/tags/list
 ```
 
 Now try pushing and pulling images [^1]. First build or pull an image to your local docker, then tag it for the new local registry and push it
-```console
+```shell
 docker pull ubuntu:16.04
 docker tag ubuntu:16.04 registry.l.example.com/my-ubuntu:1.0
 docker push ubuntu:16.04 registry.l.example.com/my-ubuntu:1.0

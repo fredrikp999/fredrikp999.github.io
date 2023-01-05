@@ -57,7 +57,7 @@ For community provided roles, see https://galaxy.ansible.com/
 
 ### Create own role
 In your playbooks/roles-folder, create an ansible role for installing some service (e.g. heimdall in the example)
-```console
+```shell
 ansible-galaxy init heimdall-role
 ```
 This creates a folder for the role with a number of sub-folders.

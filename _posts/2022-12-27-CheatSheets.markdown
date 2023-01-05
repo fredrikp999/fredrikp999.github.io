@@ -20,7 +20,7 @@ image:
 ```
 # Docker and docker-compose
 [Docker cheat sheet](https://www.dockercheatsheet.com/)
-```console
+```shell
 docker build -t my-image:1.0 .
 docker push myrepo/my-image:2.0
 docker run my-image:1.0
@@ -30,13 +30,13 @@ docker-compose up -d
 
 # Jekyll
 [Jekyll cheat sheet](https://devhints.io/jekyll)
-```console
+```shell
 bundle exec jekyll serve --host 0.0.0.0 --livereload
 ```
 
 # Ansible, ansible-playbook and ansible-galaxy
 [Ansible cheat sheet](https://www.svastikkka.com/2021/04/ansible-cli-cheatsheet.html)
-```console
+```shell
 ansible all -m ping
 ansible-playbook MYPLAYBOOK.yml -i MY_CUSTOM_INVENTORY
 ansible-galaxy init my-new-role
