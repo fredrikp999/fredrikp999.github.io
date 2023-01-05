@@ -4,6 +4,7 @@ title:  "Ansible basics"
 date:   2023-01-04 07:15:00 +0000
 categories: ansible homelab
 ---
+![image](https://media.discordapp.net/attachments/1059461993817448459/1060603763544555560/Fredrik999_a_black_flying_machine._machine_is_connected_to_smal_b48b9140-cd17-40fc-b33f-6daa877b6f46.png)
 
 # Ansible introduction
 # Ansible installation

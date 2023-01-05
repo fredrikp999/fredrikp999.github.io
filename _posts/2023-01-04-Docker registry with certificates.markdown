@@ -4,7 +4,7 @@ title:  "Docker registry with certificates"
 date:   2023-01-04 09:16:00 +0000
 categories: registry docker homelab
 ---
-
+![image](https://media.discordapp.net/attachments/1059461993817448459/1060600794082189384/Fredrik999_a_blue_whale_with_shipping_containers_on_its_back_bl_afb6cf5d-7f47-4543-91b7-2c9254a8d0e9.png)
 #### Example usage of certs on another server for (docker) registry:
 * create folder for certs
 * copy fullchain.pem and provkey.pem to ./certs
@@ -56,12 +56,11 @@ curl -u youruser:yourpass https://l.example.com:5000/v2/_catalog
 curl -u youruser:yourpass https://l.example.com:5000/v2/ubuntu/tags/list
 ```
 
-Now try pushing and pulling images. First build or pull an image to your local docker, then tag it for the new local registry and push it
+Now try pushing and pulling images [^1]. First build or pull an image to your local docker, then tag it for the new local registry and push it
 ```console
 docker pull ubuntu:16.04
 docker tag ubuntu:16.04 registry.l.example.com/my-ubuntu:1.0
 docker push ubuntu:16.04 registry.l.example.com/my-ubuntu:1.0
 ```
-NOTE: This is not working yet, I get following error message:
-* Get "https://registry.l.example.com/v2/": x509: certificate is not valid for any names, but wanted to match registry.l.example.com
-To be sorted out. Strange as login + curl is working fine with https + fails when cert does not match hostname
+### Footnotes
+[^1]: This is not working yet, I get following error message. Get "https://registry.l.example.com/v2/": x509: certificate is not valid for any names, but wanted to match registry.l.example.com
