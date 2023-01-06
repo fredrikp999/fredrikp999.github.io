@@ -9,26 +9,26 @@ image:
 ---
 
 # Introduction
-Github offers integrated CICD pipeline called github actions. This is free up to 2000 execution hours/month.
+Github offers integrated CICD pipeline called github actions. This is free up to 2000 execution hours/month. See [GitHub Actions](https://docs.github.com/en/actions)
 
 # Basics
 ## Environment
-* Pipelines are always executed in a VM. The VM flavor can be defined e.g. to ubuntu
-* One VM is used for a full pipeline
-* Each task within the pipeline is executed as separate jobs using docker
+* Workflows/Pipelines are always executed in a VM. The VM flavor can be defined to ubuntu-linux/mac/pc
+* Each job within the pipeline is executed as separate jobs in it's own freshly installed VM -  or using docker in a VM
 
 ## Definitions
 For more details, see [Understanding GitHub Actions](https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions)
-### Workflow
+### Workflows
 * The pipeline, executing one or more jobs
 * Defined in .github/workflows at the root of the repository. Triggered by an event / manually / by REST API
+* You can share actions and reusable workflows within your organization, without publishing them publicly
 
 ### Events
 * An activity which triggers a workflow run
 * Only events connected to the repository is supported (pull request, commit pushed etc.)
 
 ### Jobs
-* One or more steps used a workflow
+* One or more steps used within a workflow
 * All steps in a job is executed on the same runner
 * Data can be shared between steps in a job as sharing same runner
 * Dependencies between jobs can be defined if needed
@@ -36,3 +36,37 @@ For more details, see [Understanding GitHub Actions](https://docs.github.com/en/
 ### Steps
 * A step defines the specific actions to take
 * Always part of a Job
+* Either a shell-script or an "action"
+
+### Runners
+* A runner is the execution environment for a Job
+* Always executed in a freshly installed VM
+* Can execute directly in the VM or inside a container (?)
+
+### Actions
+* An action is a custom application for the GitHub Actions platform that performs a complex but frequently repeated task
+* You can write your own actions, or you can find actions to use in your workflows in the GitHub Marketplace
+* You can share actions and reusable workflows within your organization, without publishing them publicly
+* Find actions on: [GitHub Actions Marketplace](https://github.com/marketplace?type=actions)
+
+# Examples
+## Simple workflow example
+```yaml
+name: learn-github-actions
+run-name: ${{ github.actor }} is learning GitHub Actions
+on: [push]
+jobs:
+  check-bats-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+      - run: npm install -g bats
+      - run: bats -v
+```
+{: file=".github/workflows/myworkflow.yaml" }
+
+# References
+[Github Actions Review and Tutorial by DevOps Toolkit](https://www.youtube.com/watch?v=eZcAvTb0rbA&t=294s)
