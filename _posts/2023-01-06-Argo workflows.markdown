@@ -53,3 +53,4 @@ kubectl create rolebinding default-admin \
   --namespace argo \
   --serviceaccount=argo:default
 ```
+...
