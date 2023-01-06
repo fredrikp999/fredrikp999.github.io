@@ -38,9 +38,11 @@ sudo apt-get install python3-certbot-dns-cloudflare
 sudo mkdir /root/.secrets/
 sudo touch /root/.secrets/cloudflare.ini
 ```
-Note1: Needs to be installed on VM. Does not work on Proxmox LXC due to a mount problem with snapd for the moment (seems to be a workaround but it has some drawbacks, see https://forum.proxmox.com/threads/ubuntu-snaps-inside-lxc-container-on-proxmox.36463/#post-230060)
+> Needs to be installed on VM. Does not work on Proxmox LXC due to a mount problem with snapd for the moment (seems to be a workaround but it has some drawbacks, see https://forum.proxmox.com/threads/ubuntu-snaps-inside-lxc-container-on-proxmox.36463/#post-230060)
+{: .prompt-tip }
 
-Note2: There are multiple tutorials out there which are not up to date. Make sure to use the latest from certbot
+> There are multiple tutorials out there which are not up to date. Make sure to use the latest from certbot
+{: .prompt-tip }
 
 ### 2) Get API key from cloudflare
 API-key is created from cloudflare dashboard
