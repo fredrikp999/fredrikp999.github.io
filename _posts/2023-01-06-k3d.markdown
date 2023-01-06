@@ -12,7 +12,7 @@ k3d is a lightweight wrapper to run k3s (Rancher Lab’s minimal Kubernetes dist
 # Installation
 It is very easy to install k3d. Just make sure to have a VM with docker and kubectl installed, then run a simple installation script. Installation is done in around 10 seconds
 ## Install prerequisites
-### VM with docker
+### Install VM with docker
 Prepare a VM with docker. (Not sure if it works well also on LXC instead of VM - but running pods in a kubernetes cluster in a container in a container... seems to be pushing it bit to far? Got some errors when trying)
 
 ### Install kubectl
