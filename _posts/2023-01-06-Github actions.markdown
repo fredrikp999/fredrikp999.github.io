@@ -13,8 +13,8 @@ Github offers integrated CICD pipeline called github actions. This is free up to
 
 # Basics
 ## Environment
-* Workflows/Pipelines are always executed in a VM. The VM flavor can be defined to ubuntu-linux/mac/pc
-* Each job within the pipeline is executed as separate jobs in it's own freshly installed VM -  or using docker in a VM
+* Workflows/Pipelines are always executed in VMs. The VM flavor can be defined to ubuntu-linux/mac/pc
+* Each job within the pipeline is executed as separate jobs in it's own freshly installed VM - or using docker in a VM
 
 ## Definitions
 For more details, see [Understanding GitHub Actions](https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions)
@@ -49,6 +49,14 @@ For more details, see [Understanding GitHub Actions](https://docs.github.com/en/
 * You can share actions and reusable workflows within your organization, without publishing them publicly
 * Find actions on: [GitHub Actions Marketplace](https://github.com/marketplace?type=actions)
 
+# GitHub and Kubernetes
+It is not possible to execute jobs directly in kubernetes. What you can do is to deploy a lightweight kubernetes cluster in the VM, e.g. K3d to test your application in.
+
+## k3d
+To spin up k3d as part of a workflow, use the GitHub action [AbsaOSS/k3d-action](https://github.com/marketplace/actions/absaoss-k3d-action), available in marketplace
+AbsaOSS/k3d-action runs k3d which is a lightweight wrapper to run k3s (Rancher Lab’s minimal Kubernetes distribution) in containers. Thanks to that, we could spin up the test environment quickly with minimal memory requirements
+
+
 # Examples
 ## Simple workflow example
 ```yaml
@@ -69,4 +77,5 @@ jobs:
 {: file=".github/workflows/myworkflow.yaml" }
 
 # References
-[Github Actions Review and Tutorial by DevOps Toolkit](https://www.youtube.com/watch?v=eZcAvTb0rbA&t=294s)
+* [GitHub Actions](https://docs.github.com/en/actions)
+* [Github Actions Review and Tutorial by DevOps Toolkit](https://www.youtube.com/watch?v=eZcAvTb0rbA&t=294s)

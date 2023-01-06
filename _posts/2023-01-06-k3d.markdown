@@ -1,0 +1,75 @@
+---
+layout: post
+title:  "K3D, lightweight kubernetes cluster running in a container"
+date:   2023-01-06 10:00:10 +0000
+categories: homelab kubernetes
+tags: homelab kubernetes k3d
+image:
+  path: https://media.discordapp.net/attachments/1059461993817448459/1060871516931235930/Fredrik999_a_big_old_wooden_ship_steering_wheel._focus_on_the_s_5797a714-a166-4809-978a-55558182f9b7.png
+---
+k3d is a lightweight wrapper to run k3s (Rancher Lab’s minimal Kubernetes distribution) in docker. k3d makes it very easy to create single- and multi-node k3s clusters in docker, e.g. for local development on Kubernetes.
+
+# Installation
+It is very easy to install k3d. Just make sure to have a VM with docker and kubectl installed, then run a simple installation script. Installation is done in around 10 seconds
+## Install prerequisites
+### VM with docker
+Prepare a VM with docker. (Not sure if it works well also on LXC instead of VM - but running pods in a kubernetes cluster in a container in a container... seems to be pushing it bit to far? Got some errors when trying)
+
+### Install kubectl
+See [Install and setup kubectl on linux](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/).
+* Download and check:
+```shell
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
+```
+* Install and check:
+```shell
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+kubectl version --client --output=yaml    
+```
+
+## Install k3d
+See [k3d.io](https://k3d.io/)
+* Download and install:
+```shell
+wget -q -O - https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
+```
+
+# Create a cluster
+```shell
+k3d cluster create mycluster
+```
+Verify that cluster node is up
+```shell
+kubectl get nodes
+```
+Expected response:
+```
+NAME                     STATUS   ROLES                  AGE   VERSION
+k3d-mycluster-server-0   Ready    control-plane,master   12s   v1.24.4+k3s1
+```
+
+# Try out some basics in the cluster
+Start a single instance of nginx
+```shell
+kubectl create deployment nginx --image=nginx
+```
+create a Job which prints "Hello World"
+```shell
+kubectl create job hello --image=busybox:1.28 -- echo "Hello World"
+```
+Check running pods, deployments etc.
+```shell
+kubectl get all
+```
+
+# Delete a cluster
+```shell
+k3d cluster delete mycluster
+```
+Verify that cluster node is up
+```shell
+kubectl get nodes
+```
+Expected response: error: the server doesn't have a resource type "nodes"
