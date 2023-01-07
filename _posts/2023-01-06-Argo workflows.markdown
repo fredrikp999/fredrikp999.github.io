@@ -5,7 +5,7 @@ date:   2023-01-06 11:00:10 +0000
 categories: homelab kubernetes
 tags: homelab kubernetes argo CD
 image:
-  path: https://media.discordapp.net/attachments/1059461993817448459/1060871516931235930/Fredrik999_a_big_old_wooden_ship_steering_wheel._focus_on_the_s_5797a714-a166-4809-978a-55558182f9b7.png
+  path: https://media.discordapp.net/attachments/1039418871024721970/1060972305653702817/Fredrik999_a_happy_orange_squid_with_big_rund_eyes._Clean_desig_9db13728-f380-4975-aea5-ceafc6e43d69.png
 ---
 Argo Workflows is an open source container-native workflow engine for orchestrating parallel jobs on Kubernetes. Argo Workflows is implemented as a Kubernetes CRD (Custom Resource Definition).
 
