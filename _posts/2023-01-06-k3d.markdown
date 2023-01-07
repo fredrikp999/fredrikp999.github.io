@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "K3D, lightweight kubernetes cluster running in a container"
+title:  "K3d, lightweight kubernetes cluster running in a container"
 date:   2023-01-06 10:00:10 +0000
 categories: homelab kubernetes
 tags: homelab kubernetes k3d
