@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Argo Workflow basics"
+title:  "Argo Workflows - get started"
 date:   2023-01-06 11:00:10 +0000
 categories: homelab kubernetes
 tags: homelab kubernetes argo CD
