@@ -157,7 +157,7 @@ kubectl logs hello-world-yyy -c main -n argo
 ```
 However, using Argo CLI provides a number of features you do not get with kubectl
 
-## More advanced workflow examples
+## More workflow examples
 [Example workflows from pipekit.io](https://pipekit.io/blog/top-10-argo-workflows-examples)
 ### Git-clone
 
@@ -260,4 +260,62 @@ dag-target-zdv48-echo-2696492701: time="2023-01-07T07:44:40.333Z" level=info msg
 dag-target-zdv48-echo-2595826987: E
 dag-target-zdv48-echo-2595826987: time="2023-01-07T07:44:50.329Z" level=info msg="sub-process exited" argo=true error="<nil>"
 ```
-...
+# Other topics
+## Service account and role bindings
+It is highly recommended to always submit workflows with separate service accounts which have restricted access (specific role), e.g. only being allowed to execute argo workflows
+
+The steps are:
+* Create a service account
+* Create a role (unless using default argo role)
+* Create role binding between service account and role
+
+### Create role
+You can either use the standard role which comes with argo "argo-role", or you can create your own role per below.
+Below example of a role which can only work with argo resources
+```
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: my-workflow-executor
+rules:
+  - apiGroups:
+      - argoproj.io
+    resources:
+      - workflowtaskresults
+    verbs:
+      - create
+      - patch
+```
+{: file="argo-workflow-role.yaml" }
+
+Create the role
+```shell
+kubectl apply -f argo-workflow-role.yaml
+```
+
+### Create service account
+Create a new service account (called "me") which shall be used for creating workflows
+```shell
+kubectl create serviceaccount me
+```
+
+### Create role binding
+Create a role binding between the new service account (me) and the standard argo role (workflow-role).
+```shell
+kubectl create rolebinding me --serviceaccount=argo:me --role=workflo
+w-role
+```
+Or - Create a role binding between the new service account (me) and my custom argo role (my-workflow-executor).
+```shell
+kubectl create rolebinding me --serviceaccount=argo:me --role=my-workflow-executor
+```
+
+### Use the new service account to submit a workflow
+Submit a workflow using the new service account
+```shell
+argo submit --serviceaccount me dag-workflow.yaml
+```
+Check
+```shell
+argo list
+```
