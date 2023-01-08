@@ -73,3 +73,6 @@ Verify that cluster node is up
 kubectl get nodes
 ```
 Expected response: error: the server doesn't have a resource type "nodes"
+
+# References
+[Provision a Highly Available K3S Cluster with K3D](https://akyriako.medium.com/provision-a-high-availability-k3s-cluster-with-k3d-a7519f476c9c)
