@@ -5,7 +5,7 @@ date:   2023-01-08 16:00:10 +0000
 categories: homelab CICD
 tags: homelab kubernetes argo CD
 image:
-  path: https://media.discordapp.net/attachments/1059461993817448459/1061617378733080616/Fredrik999_a_happy_orange_squid_with_big_round_eyes_4bdcf17d-b890-4edc-94cf-ca28c2c4245a.png
+  path: https://media.discordapp.net/attachments/1059461993817448459/1061573699083444306/Fredrik999_a_happy_orange_squid_with_big_round_eyes._In_the_sun_33a17c50-9944-411e-8e31-86e075ca5e75.png
 ---
 
 Argo events...
