@@ -36,7 +36,9 @@ See [k3d.io](https://k3d.io/)
 wget -q -O - https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
 ```
 
-# Create a cluster
+# A basic cluster
+A basic cluster can be setup per below. (For a little more advanced, see further down)
+## Create the cluster
 ```shell
 k3d cluster create mycluster
 ```
@@ -50,7 +52,7 @@ NAME                     STATUS   ROLES                  AGE   VERSION
 k3d-mycluster-server-0   Ready    control-plane,master   12s   v1.24.4+k3s1
 ```
 
-# Try out some basics in the cluster
+## Try out some basics in the cluster
 Start a single instance of nginx
 ```shell
 kubectl create deployment nginx --image=nginx
@@ -64,7 +66,7 @@ Check running pods, deployments etc.
 kubectl get all
 ```
 
-# Delete a cluster
+## Delete a cluster
 ```shell
 k3d cluster delete mycluster
 ```
@@ -73,6 +75,30 @@ Verify that cluster node is up
 kubectl get nodes
 ```
 Expected response: error: the server doesn't have a resource type "nodes"
+
+# A proper cluster
+## Create the cluster
+Create a cluster called "my-cluster" exposing ports 443 (https) and 80 (http). Also setup port forwarding on the external port of the host running k3d (0.0.0.0) for traefik load balancer (port 9000)
+```shell
+k3d cluster create -p "80:80@loadbalancer" -p "443:443@loadbalancer" my-cluster
+kubectl port-forward -n kube-system "$(kubectl get pods -n kube-system| grep '^traefik-' | awk '{print $1}')" 9000:9000 --address 0.0.0.0 &
+```
+Alternatively, you could set up the cluster with multiple worker nodes per below
+```shell
+k3d cluster create --servers 3 --agents 5 -p "80:80@loadbalancer" -p "443:443@loadbalancer"
+kubectl port-forward -n kube-system "$(kubectl get pods -n kube-system| grep '^traefik-' | awk '{print $1}')" 9000:9000 --address 0.0.0.0 &
+```
+
+You should now be able to access the traefik dashboard on:
+* http://HOST-IP:9000/dashboard/
+
+You can also use other routes as configured in traefik, e.g.
+* http://HOST-IP:9000/ping (Not a lot of fun, but showing the reverse proxy working)
+
+Now you just need to set-up routes to your other services running in the cluster using traefik. (To be expanded here or separately)
+
+
+
 
 # References
 [Provision a Highly Available K3S Cluster with K3D](https://akyriako.medium.com/provision-a-high-availability-k3s-cluster-with-k3d-a7519f476c9c)
