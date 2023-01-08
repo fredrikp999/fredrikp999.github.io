@@ -12,6 +12,8 @@ How to work with input- and output-artifacts. How to work with Templates, secret
 For longer explanations, see this workshop by argo-team talking about this and more
 * [Argo workflows 101 Workshop 22 Sep 2020](https://www.youtube.com/watch?v=XySJb-WmL3Q&t=4634s)
 
+Recommendation is also to checkout some example workflows on github:
+* [argoworkflow examples](https://github.com/argoproj/argo-workflows/tree/master/examples)
 
 # Definitions
 ## Main concepts
