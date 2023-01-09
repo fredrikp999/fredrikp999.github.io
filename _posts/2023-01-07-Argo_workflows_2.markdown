@@ -89,7 +89,13 @@ templates:
 {: file="multistep-workflow.yaml" }
 
 # Working with input and output artifacts
-...
+Argo workflows can work with a number of different type of repositories
+* Argo handles the communication towards them and provide a certain artifact / folder / bucket to the container executing the workflow.
+* The artifacts is assigned a name and is provided to the container at a defined path
+* Same goes in the other direction for output artifacts which are also defined by a name and a path + type
+* Many different types are supported e.g. s3, http, artifactory, gcp artifact storage, aws, hdfs etc.
+* Reference to artifacts can be provided in a workflow, passing an artifact generated in one step to another step
+* It is also possible to pass artifacts directly between steps
 
 ## Passing artifacts directly from one step to another within the same workflow
 It is possible to produce an artifact in one step and then consume it in the next step without having to specify any itermediate storage (like an s3-bucket) to store and retrieve it from
@@ -247,7 +253,7 @@ spec:
   ```
   {: file="s3-artifacts.yaml" }
 
-## HTTP URL artifact input
+## Use HTTP URL to store artifacts
   Using artifact from HTTP URL
   ```yaml
   templates:
@@ -262,7 +268,7 @@ spec:
   ```
   {: file="HTTP-URL-artifacts.yaml" }
 
-## Google Cloud Platform, GCP artifact storage
+## Use GCP artifact storage to store artifacts
   ```yaml
   templates:
     - name: input-artifact-gcs-example
