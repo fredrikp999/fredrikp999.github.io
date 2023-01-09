@@ -8,7 +8,7 @@ image:
   path: https://media.discordapp.net/attachments/1059461993817448459/1061753604135976990/Fredrik999_a_warm_summer_day_in_the_mountains._An_orange_squid__e8622bcd-4249-4102-8512-9ef02fd8dc08.png
 ---
 
-Argo events...
+Argo events... [TO BE ADDED]
 
 # Install argo events
 ## Prerequisites
