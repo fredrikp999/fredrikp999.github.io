@@ -93,56 +93,9 @@ Argo workflows can work with a number of different type of repositories
 * Argo handles the communication towards them and provide a certain artifact / folder / bucket to the container executing the workflow.
 * The artifacts is assigned a name and is provided to the container at a defined path
 * Same goes in the other direction for output artifacts which are also defined by a name and a path + type
-* Many different types are supported e.g. s3, http, artifactory, gcp artifact storage, aws, hdfs etc.
+* Many different types are supported e.g. s3, http, artifactory, gcp artifact storage, aws, hdfs, git-repo etc.
 * Reference to artifacts can be provided in a workflow, passing an artifact generated in one step to another step
 * It is also possible to pass artifacts directly between steps
-
-## Passing artifacts directly from one step to another within the same workflow
-It is possible to produce an artifact in one step and then consume it in the next step without having to specify any itermediate storage (like an s3-bucket) to store and retrieve it from
-* In the **template** executed by the step **generating** an artifact, specify "outputs:artifacts + name and path"
-* In the **template** executed by the step **consuming** an artifact, specify "inputs:artifacts + name and path"
-* In the **step** calling the template consuming the artifact, specify "arguments:artifacts + name". Also specify from which step the artifact shall be taken (steps.STEP.outputs.artifacts.ARTIFACTNAME)
-
-```yaml
-apiVersion: argoproj.io/v1alpha1
-kind: Workflow
-metadata:
-  generateName: artifact-passing-
-spec:
-  entrypoint: artifact-example
-  templates:
-  - name: artifact-example
-    steps:
-    - - name: generate-artifact
-        template: whalesay
-    - - name: consume-artifact
-        template: print-message
-        arguments:
-          artifacts:
-          - name: message
-            from: "{{steps.generate-artifact.outputs.artifacts.hello-art}}"
-
-  - name: whalesay
-    container:
-      image: docker/whalesay:latest
-      command: [sh, -c]
-      args: ["sleep 1; cowsay hello world | tee /tmp/hello_world.txt"]
-    outputs:
-      artifacts:
-      - name: hello-art
-        path: /tmp/hello_world.txt
-
-  - name: print-message
-    inputs:
-      artifacts:
-      - name: message
-        path: /tmp/message
-    container:
-      image: alpine:latest
-      command: [sh, -c]
-      args: ["cat /tmp/message"]
-  ```
-  {: file="direct-artifact-passing.yaml" }
 
 ## Use artifactory to store artifacts
 Below example demonstrates the use of artifactory as the store for artifacts.
@@ -294,10 +247,7 @@ spec:
   ```
   {: file="gcp-artifacts.yaml" }
 
-# Working with input and output arguments in a workflow
-...
-
-# Working with git-repos in a workflow
+## Use a git-repo as input artifacts in a workflow
 This example shows how to clone contents from a git-repo. Argo will provide it to the executing container on the path specified
 
 ```yaml
@@ -360,6 +310,56 @@ spec:
       workingDir: /src
 ```
   {: file="git-workflow.yaml" }
+
+## Passing artifacts directly from one step to another within the same workflow
+It is possible to produce an artifact in one step and then consume it in the next step without having to specify any itermediate storage (like an s3-bucket) to store and retrieve it from
+* In the **template** executed by the step **generating** an artifact, specify "outputs:artifacts + name and path"
+* In the **template** executed by the step **consuming** an artifact, specify "inputs:artifacts + name and path"
+* In the **step** calling the template consuming the artifact, specify "arguments:artifacts + name". Also specify from which step the artifact shall be taken (steps.STEP.outputs.artifacts.ARTIFACTNAME)
+
+```yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: artifact-passing-
+spec:
+  entrypoint: artifact-example
+  templates:
+  - name: artifact-example
+    steps:
+    - - name: generate-artifact
+        template: whalesay
+    - - name: consume-artifact
+        template: print-message
+        arguments:
+          artifacts:
+          - name: message
+            from: "{{steps.generate-artifact.outputs.artifacts.hello-art}}"
+
+  - name: whalesay
+    container:
+      image: docker/whalesay:latest
+      command: [sh, -c]
+      args: ["sleep 1; cowsay hello world | tee /tmp/hello_world.txt"]
+    outputs:
+      artifacts:
+      - name: hello-art
+        path: /tmp/hello_world.txt
+
+  - name: print-message
+    inputs:
+      artifacts:
+      - name: message
+        path: /tmp/message
+    container:
+      image: alpine:latest
+      command: [sh, -c]
+      args: ["cat /tmp/message"]
+  ```
+  {: file="direct-artifact-passing.yaml" }
+
+# Working with input and output arguments in a workflow
+...
 
 
 # Working with secrets
