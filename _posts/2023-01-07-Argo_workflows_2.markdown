@@ -455,3 +455,4 @@ spec:
       command: [sh, -c]
       args: ["echo result was: {{inputs.parameters.message}}"]
   ```
+  {: file="python-workflow.yaml" }
