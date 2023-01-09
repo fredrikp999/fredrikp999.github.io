@@ -5,7 +5,7 @@ date:   2023-01-03 07:15:00 +0000
 categories: homelab web
 tags: homelab jekyll
 image:
-  path: https://media.discordapp.net/attachments/1059461993817448459/1060601198232748042/Fredrik999_jekyll_and_hyde_black_background_b1d729ab-d22d-4b26-a33e-6c4494282b69.png
+  path: https://media.discordapp.net/attachments/1059461993817448459/1061702039199023175/Fredrik999_dr_jekyll_c18a67a8-d2f8-44ab-a5df-70f7ee9ece1e.png
 ---
 # Introduction
 Jekyll is a static site generator. It takes text written in your favorite markup language and uses layouts to create a static website. You can tweak the site’s look and feel, URLs, the data displayed on the page, and more.

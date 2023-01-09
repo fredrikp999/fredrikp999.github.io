@@ -5,7 +5,7 @@ date:   2023-01-04 09:16:00 +0000
 categories: homelab services
 tags: homelab registry docker
 image:
-  path: https://media.discordapp.net/attachments/1059461993817448459/1060600794082189384/Fredrik999_a_blue_whale_with_shipping_containers_on_its_back_bl_afb6cf5d-7f47-4543-91b7-2c9254a8d0e9.png
+  path: https://media.discordapp.net/attachments/1059461993817448459/1061728107612082256/Fredrik999_a_blue_whale_with_shipping_containers_on_the_back_9a5234a6-9281-469e-bce6-cbfdf018962e.png
 ---
 #### Example usage of certs on another server for (docker) registry:
 * create folder for certs
