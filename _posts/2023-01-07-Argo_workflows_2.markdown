@@ -86,6 +86,7 @@ templates:
         command: [cowsay]
         args: ["{{inputs.parameters.message}}"]  # This template runs "cowsay" in the "whalesay" image with arguments as provided by input parameter 
 ```
+{: file="multistep-workflow.yaml" }
 
 # Working with input and output artifacts
 ...
@@ -135,6 +136,7 @@ spec:
       command: [sh, -c]
       args: ["cat /tmp/message"]
   ```
+  {: file="direct-artifact-passing.yaml" }
 
 ## Use artifactory to store artifacts
 Below example demonstrates the use of artifactory as the store for artifacts.
@@ -198,6 +200,7 @@ spec:
       command: [sh, -c]
       args: ["cat /tmp/message"]
   ```
+  {: file="artifactory-artifacts.yaml" }
 
 ## Use s3-bucket to store artifacts
 Example for how to retrieve artifacts from s3.
@@ -242,6 +245,48 @@ spec:
       command: [sh, -c]
       args: ["ls -l /my-artifact"]
   ```
+  {: file="s3-artifacts.yaml" }
+
+## HTTP URL artifact input
+  Using artifact from HTTP URL
+  ```yaml
+  templates:
+  - name: http-artifact-example
+    inputs:
+      artifacts:
+      - name: kubectl
+        path: /bin/kubectl
+        mode: 0755
+        http:
+          url: https://storage.googleapis.com/kubernetes-release/release/v1.8.0/bin/linux/amd64/kubectl
+  ```
+  {: file="HTTP-URL-artifacts.yaml" }
+
+## Google Cloud Platform, GCP artifact storage
+  ```yaml
+  templates:
+    - name: input-artifact-gcs-example
+      inputs:
+        artifacts:
+          - name: my-art
+            path: /my-artifact
+            gcs:
+              bucket: my-bucket-name
+              # key could be either a file or a directory.
+              key: path/in/bucket
+              # serviceAccountKeySecret is a secret selector.
+              # It references the k8s secret named 'my-gcs-credentials'.
+              # This secret is expected to have have the key 'serviceAccountKey',
+              # containing the base64 encoded Google Cloud Service Account Key (json)
+              # to the bucket.
+              #
+              # If it's running on GKE, and Workload Identity is used,
+              # serviceAccountKeySecret is not needed.
+              serviceAccountKeySecret:
+                name: my-gcs-credentials
+                key: serviceAccountKey
+  ```
+  {: file="gcp-artifacts.yaml" }
 
 # Working with input and output arguments in a workflow
 ...
@@ -308,14 +353,105 @@ spec:
       args: ["git status && ls && cat VERSION"]
       workingDir: /src
 ```
+  {: file="git-workflow.yaml" }
 
 
 # Working with secrets
 
 Secrets are provided to the template from Kubernetes secrets
-* The normal way for a workflow to handle secrets is to use kubernetes secrets.
-* It could of course also be that the kubernetes secrets are used as keys to access the encrypted secrets in e.g. a vault
+* Secrets should be stored externally from the workflow as kubernetes secrets, and accessed using normal kubernetes facilities, such as volume mounting the secret, or as an environment variable.
+* The kubernetes secrets could also be used as keys to access the encrypted secrets in e.g. a vault as one extra level of protection
 
-```shell
-kubectl create secret generic my-artifactory-credentials --from-literal=username=<YOUR-ARTIFACTORY-USERNAME> --from-literal=password=<YOUR-ARTIFACTORY-PASSWORD>
-``` 
+
+This example demonstrates how to reference kubernetes secrets in a workflow, both as volume mounting and as environment variable.
+
+ To run this example, first create the secret by running:
+ ```shell
+ kubectl create secret generic my-secret --from-literal=mypassword=S00perS3cretPa55word
+ ``` 
+
+```yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: secrets-
+spec:
+  entrypoint: print-secret
+  # To use a secret as files, it is exactly the same as mounting secrets as in
+  # a pod spec. First add an volume entry in the spec.volumes[]. Name the volume
+  # anything. spec.volumes[].secret.secretName should match the name of the k8s
+  # secret, which was created using kubectl. In any container template spec, add
+  # a mount to volumeMounts referencing the volume name and a mount path.
+  volumes:
+  - name: my-secret-vol
+    secret:
+      secretName: my-secret
+  templates:
+  - name: print-secret
+    container:
+      image: alpine:3.7
+      command: [sh, -c]
+      args: ['
+        echo "secret from env: $MYSECRETPASSWORD";
+        echo "secret from file: `cat /secret/mountpath/mypassword`"
+      ']
+      # To use a secret as an environment variable, use the valueFrom with a
+      # secretKeyRef. valueFrom.secretKeyRef.name should match the name of the
+      # k8s secret, which was created using kubectl. valueFrom.secretKeyRef.key
+      # is the key you want to use as the value of the environment variable.
+      env:
+      - name: MYSECRETPASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: my-secret
+            key: mypassword
+      volumeMounts:
+      - name: my-secret-vol
+        mountPath: "/secret/mountpath"
+  ```
+  {: file="secrets.yaml" }
+
+# In-line code in workflows
+## Python
+Script templates provide a way to run arbitrary snippets of code in any language, to produce a output "result" via the standard out of the template.
+* Results can then be referenced using the variable, {{steps.<stepname>.outputs.result}}, and used as parameter to other templates, and in 'when', and 'withParam' clauses.
+* This example demonstrates the use of a python script to generate a random number which is printed in the next step.
+* It is possible to write in-line code also for e.g. bash and javascript
+
+
+```yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: scripts-python-
+spec:
+  entrypoint: python-script-example
+  templates:
+  - name: python-script-example
+    steps:
+    - - name: generate
+        template: gen-random-int
+    - - name: print
+        template: print-message
+        arguments:
+          parameters:
+          - name: message
+            value: "{{steps.generate.outputs.result}}"
+
+  - name: gen-random-int
+    script:
+      image: python:alpine3.6
+      command: [python]
+      source: |
+        import random
+        i = random.randint(1, 100)
+        print(i)
+  - name: print-message
+    inputs:
+      parameters:
+      - name: message
+    container:
+      image: alpine:latest
+      command: [sh, -c]
+      args: ["echo result was: {{inputs.parameters.message}}"]
+  ```
