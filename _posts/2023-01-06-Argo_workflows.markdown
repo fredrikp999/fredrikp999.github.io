@@ -23,6 +23,8 @@ Make sure to specify wanted argo release below. Find releases here: [argo workfl
 kubectl create namespace argo
 kubectl apply -n argo -f https://github.com/argoproj/argo-workflows/releases/download/v3.4.4/install.yaml
 ```
+(Note: There is an inofficial helm-chart as alternative)
+
 Patch argo-server authentication
 ```shell
 kubectl patch deployment \
@@ -34,18 +36,6 @@ kubectl patch deployment \
   "--auth-mode=server"
 ]}]'
 ```
-Optionally, create rolebinding (not part of official guide)
-```shell
-kubectl create rolebinding default-admin \
-  --clusterrole cluster-admin \
-  --namespace argo \
-  --serviceaccount=argo:default
-```
-
-Optionally, Port-forward the UI
-```shell
-kubectl -n argo port-forward deployment/argo-server 2746:2746
-```
 
 Optionally, check and wait for controller to be up
 ```shell
@@ -53,6 +43,14 @@ kubectl wait deployment workflow-controller \
   --for condition=Available \
   --namespace argo
 ```
+
+Optionally, Start the argo server and make port-forward the UI for simple setup (of course better setting it up with Traefik ingress)
+```shell
+argo server
+kubectl --address 0.0.0.0 -n argo port-forward deployment/argo-server 2746:2746 &
+```
+You can now access the GUI from port 2746
+
 
 ## Install Argo CLI
 Version 3.4.4 installed below, check and update link if later version is available
