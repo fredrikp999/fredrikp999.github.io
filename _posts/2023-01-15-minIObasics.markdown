@@ -37,6 +37,7 @@ Make sure to set the "Server location" / "region" as this will be needed when ac
 ## minIO bucket setup
 * Create a bucket in minIO (Buckets->Create Bucket)
 * Configure access, policy for user (Access->Users)
+* It is possible to enable anynomous access to a specific bucket. Not recommended in general, but there might be cases
 
 # Install and configure minIO client
 See [minIO client quick start](https://min.io/docs/minio/linux/reference/minio-mc.html)
