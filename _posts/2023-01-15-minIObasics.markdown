@@ -64,6 +64,7 @@ Some examples
 ```shell
 mc cp myartifact.txt myminio/frippe # Copy file to root of frippe-bucket
 mc ls myminio/frippe #ls of buckel frippe
+mc cat myminio/frippe/myartifact.txt
 ```
 See [minio mc reference](https://min.io/docs/minio/linux/reference/minio-mc.html) for available commands (quite a lot)
 
@@ -71,4 +72,4 @@ See [minio mc reference](https://min.io/docs/minio/linux/reference/minio-mc.html
 See other posts for details on this, but the short description is
 * Create a kubernetes secret with the md5-encoded access-key and secrets-key. Note that how the keys are named are a bit different from the way minIO name them (secretKey instead of secrets-key)
 * Reference the kubernetes secrets from the workflow when defining input or output artifacts
-* Even better is to create and submit a template where the artifacts are defined centrally instead of defining the details in every workflow
+* Even better is to create and submit a configmap (with metadata name = artifact-repositories) where the artifacts are defined centrally instead of defining the details in every workflow. You can then reference the repos defined in that configmap in your workflows
