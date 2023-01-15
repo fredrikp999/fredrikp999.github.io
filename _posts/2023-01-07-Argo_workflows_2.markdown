@@ -419,7 +419,7 @@ spec:
 
 # In-line code in workflows
 Script templates provide a way to run arbitrary snippets of code in any language, to produce a output "result" via the standard out of the template.
-* Results can then be referenced using the variable, {{steps.<stepname>.outputs.result}}, and used as parameter to other templates, and in 'when', and 'withParam' clauses.
+* Results can then be referenced using the variable, {{steps.stepname.outputs.result}}, and used as parameter to other templates, and in 'when', and 'withParam' clauses.
 * This example demonstrates the use of a python script to generate a random number which is printed in the next step.
 * It is possible to write in-line code for python, bash and javascript
 ## Python
