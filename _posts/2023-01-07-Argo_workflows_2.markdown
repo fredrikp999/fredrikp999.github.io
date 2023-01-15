@@ -90,12 +90,14 @@ templates:
 
 # Working with input and output artifacts
 Argo workflows can work with a number of different type of repositories
-* Argo handles the communication towards them and provide a certain artifact / folder / bucket to the container executing the workflow.
+* Argo handles the communication towards them and provide a certain artifact to the container executing the workflow.
 * The artifacts is assigned a name and is provided to the container at a defined path
 * Same goes in the other direction for output artifacts which are also defined by a name and a path + type
 * Many different types are supported e.g. s3, http, artifactory, gcp artifact storage, aws, hdfs, git-repo etc.
 * Reference to artifacts can be provided in a workflow, passing an artifact generated in one step to another step
 * It is also possible to pass artifacts directly between steps
+* It seems like you need to explicitly specify each artifact for most artifact types and that it is not possible to access a whole folder/bucket/structure except for when using git as the artifact type
+* This "limitation" is probably good, as it is very inefficient to handle many small files e.g. in minIO. Argo also has built-in support for packing/unpacking e.g. to tar.gz which is the recommended way
 
 ## Use artifactory to store artifacts
 Below example demonstrates the use of artifactory as the store for artifacts.
@@ -206,7 +208,7 @@ spec:
   ```
   {: file="s3-artifacts.yaml" }
 
-## Use HTTP URL to store artifacts
+## Use HTTP URL as input artifact for a binary
   Using artifact from HTTP URL
   ```yaml
   templates:
@@ -220,6 +222,33 @@ spec:
           url: https://storage.googleapis.com/kubernetes-release/release/v1.8.0/bin/linux/amd64/kubectl
   ```
   {: file="HTTP-URL-artifacts.yaml" }
+
+## Use HTTP URL as input artifact for a text file + using it
+  Using artifact from HTTP URL
+  ```yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: input-artifact-http-
+spec:
+  entrypoint: http-artifact-example
+  templates:
+  - name: http-artifact-example
+    inputs:
+      artifacts:
+      - name: somefile
+        path: /temp/archive-location.yaml
+        mode: 0755
+        http:
+          url: https://github.com/argoproj/argo-workflows/blob/master/examples/archive-location.yaml
+    container:
+      image: debian:9.4
+      command: [cat]
+      args: ["/temp/archive-location.yaml"]
+  ```
+  {: file="HTTP-URL-text-artifacts.yaml" }
+
+
 
 ## Use GCP artifact storage to store artifacts
   ```yaml
