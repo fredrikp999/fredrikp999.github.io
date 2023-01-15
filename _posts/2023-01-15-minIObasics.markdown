@@ -14,7 +14,7 @@ Install in k8s or simply using docker. You can even install it using a default a
 
 (Add refs)
 
-## minIO configuration
+## minIO deployment configuration
 Two ports to expose at some external port
 - Port for WebUI (port 9000 internally)
 - Port for API to be used e.g. by mc or argo workflows (port 9001 internally)
@@ -25,10 +25,14 @@ Two ports to expose at some external port
 * Create Access Key for the user
 
 The access key will be created with
-* access-Key
+* access-key
 * secrets-key
 
 Take note of these and use them in your clients (mc, k8s secrets for argo etc.)
+
+## other basic configurations in minIO
+Make sure to set the "Server location" / "region" as this will be needed when accessing from clients through the API
+* Settings-> Reqion->Server Location
 
 ## minIO bucket setup
 * Create a bucket in minIO (Buckets->Create Bucket)
