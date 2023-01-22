@@ -75,3 +75,5 @@ If you want to fully automate also the creation of VMs from the template, see ot
 * NOTE: I had problems installing qemu-agent, which I disabled in the example until solved the problem
 
 
+# References
+[My private repo with proxmox packers (sorry, not public)](https://github.com/fredrikp999/proxmox-packers)
