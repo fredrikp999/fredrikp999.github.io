@@ -32,10 +32,16 @@ sudo apt update && sudo apt install packer
 ** Add an API token for your user (root or other)
 ** IMPORTANT: Uncheck "Privilage Separation"!
 
-* Copy and paste API token ID and API token secret to credentials file
+* Copy and paste Proxmox API token ID and API token secret to credentials file
 ** e.g. "credentials.pkt.hcl"
 ** Make sure to NOT include this file in files tracked in git!
 ** (add the filename to .gitignore)
+```
+proxmox_api_url="https://ip-of-proxmox:8006/api2/json"
+proxmox_api_token_id="some-user@pam!some-token"
+proxmox_api_token_secret="some-secret"
+```
+{: file="credentials.pkr.hcl" }
 
 # Decide on iso image to use
 * Use a cloud-image if available, e.g. from [ubuntu releases](https://releases.ubuntu.com/). Either download and store e.g. in ./iso/... or reference the http-location. If refering to http-location, packer will cache the download so you do not have to download again
@@ -46,6 +52,30 @@ sudo apt update && sudo apt install packer
 * In [something].pkr.hcl-file, configure "ssh-username" as the user which will be created and used during VM template creation
 * In user-data-file, add the same user-name
 * In user-data-file, add the public key from the host executing packer (~/.ssh/id_rsa.pub)
+
+```
+...
+user-data:
+    package_upgrade: false
+    timezone: Europe/Stockholm
+    users:
+      - name: nissenils
+        groups: [adm, sudo]
+        lock-passwd: false
+        sudo: ALL=(ALL) NOPASSWD:ALL
+        shell: /bin/bash
+        ssh_authorized_keys:
+        - ssh-rsa AAAAB3N...
+```
+{: file="user-data" }
+
+```
+    ...
+    ssh_username = "some-user-of-choice"
+    ssh_private_key_file = "~/.ssh/id_rsa"
+```
+{: file="something.pkr.hcl" }
+
 
 # Execute packer
 ```shell
@@ -76,4 +106,7 @@ If you want to fully automate also the creation of VMs from the template, see ot
 
 
 # References
-[My private repo with proxmox packers (sorry, not public)](https://github.com/fredrikp999/proxmox-packers)
+* [Proxmox VE - How to build an Ubuntu 22.04 Template](https://www.youtube.com/watch?v=MJgIm03Jxdo)
+* [Create VMs on Proxmox in Seconds by Christian Lempa](https://www.youtube.com/watch?v=1nf3WOEFq1Y)
+* [Getting started with cloud-init](https://www.youtube.com/watch?v=exeuvgPxd-E)
+* [My private repo with proxmox packers (sorry, not public)](https://github.com/fredrikp999/proxmox-packers)
