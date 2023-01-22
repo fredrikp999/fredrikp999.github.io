@@ -51,6 +51,21 @@ sudo apt update && sudo apt install packer
 ```shell
 packer build -var-file="credentials.pkr.hcl" ./ubuntu-server-focal-docker.pkr.hcl
 ```
+You should now have a new VM template available in Proxmox
+
+# Create a VM - by cloning the new template
+## From Proxmox GUI
+If you prefer creating VM from the Proxmox GUI:
+* Right click on the VM template and select clone
+* Choose "full clone" (so that new VM can exist even if template is removed)
+* Choose an ID and a name + click "clone"
+* Wait for new VM to be created
+* On the new VM, click "cloud-init" and define user and password
+* Click "regenerate image"
+* Start VM
+
+## Using Terraform
+If you want to fully automate also the creation of VMs from the template, see other post on how to do this
 
 # What is going on?
 * Packer is uploading and starting up the cloud-init image in Proxmox
