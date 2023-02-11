@@ -75,7 +75,18 @@ In the repo, create files in the cluster-folder which was created in the bootstr
 
 * In this example, I create a nginx service using the bitnami helmchart. It is created in the namespace "my-nginx" with the name my-nginx
 
-The two files to create are:
+The three files to create are:
+
+* One file defining the namespace
+``` yaml
+# Kubernetes namespace for nginx webserver
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: webservers
+```
+{: file="./clusters/my-cluster/namespaces/webservers/webservers-namespace.yaml" }
+
 
 * One file defining a source for helmcharts
 * The source can be a HelmRepository, GitRepository or a Bucket. In this case we point to an external HelmRepository from Bitnami
@@ -84,12 +95,12 @@ apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmRepository
 metadata:
   name: bitnami
-  namespace: my-nginx
+  namespace: webservers
 spec:
   interval: 1m0s
   url: https://charts.bitnami.com/bitnami
 ```
-{: file="my-nginx-source.yaml" }
+{: file="./clusters/my-cluster/namespaces/webservers/apps/nginx-webserver/nginx-webserver-repo.yaml" }
 
 * One file defining the wanted state for your application
 * We specify in what namespace it is to be deployed and with what name
@@ -99,8 +110,8 @@ spec:
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: my-nginx
-  namespace: my-nginx
+  name: webserver
+  namespace: webservers
 spec:
   chart:
     spec:
@@ -118,7 +129,7 @@ spec:
       branch: "main"
       interval: 3600
   ```
-  {: file="my-nginx-helmrelease.yaml" }
+{: file="./clusters/my-cluster/namespaces/webservers/apps/nginx-webserver/nginx-webserver-helmrelease.yaml" }
 
 ## Make it happen
 Now you just have to commit and merge the files to gitlab repo and wait for reconciliation to take place
