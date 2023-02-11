@@ -94,6 +94,7 @@ spec:
 * One file defining the wanted state for your application
 * We specify in what namespace it is to be deployed and with what name
 * We also specify which is the HelmChart to deploy. Here we specify an exact version, but it is also possible to specify a semver range  e.g. >=13.2.0 <14.0.0.
+* In the example we also show that we can set values. Here we use that to instruct nginx to clone down static html from another git-repo at an interval
 ``` yaml
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
@@ -110,6 +111,12 @@ spec:
         name: bitnami
       version: 13.2.23
   interval: 1m0s
+  values:
+    cloneStaticSiteFromGit:
+      enabled: true
+      repository: "https://github.com/fredrikp999/static-html"
+      branch: "main"
+      interval: 3600
   ```
   {: file="my-nginx-helmrelease.yaml" }
 
