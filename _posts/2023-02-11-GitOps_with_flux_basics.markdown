@@ -77,7 +77,8 @@ In the repo, create files in the cluster-folder which was created in the bootstr
 
 The two files to create are:
 
-* One file defining a HelmRepository source
+* One file defining a source for helmcharts
+* The source can be a HelmRepository, GitRepository or a Bucket. In this case we point to an external HelmRepository from Bitnami
 ``` yaml
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmRepository
@@ -90,7 +91,9 @@ spec:
 ```
 {: file="my-nginx-source.yaml" }
 
-* One file defining the wanted state for your application.
+* One file defining the wanted state for your application
+* We specify in what namespace it is to be deployed and with what name
+* We also specify which is the HelmChart to deploy. Here we specify an exact version, but it is also possible to specify a semver range  e.g. >=13.2.0 <14.0.0.
 ``` yaml
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
