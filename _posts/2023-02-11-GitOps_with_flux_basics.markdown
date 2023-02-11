@@ -75,6 +75,27 @@ In the repo, create files in the cluster-folder which was created in the bootstr
 
 * In this example, I create a nginx service using the bitnami helmchart. It is created in the namespace "my-nginx" with the name my-nginx
 
+* Filestructure is per below
+`-- clusters
+    `-- my-cluster
+        |-- flux-system
+        |   |-- gotk-components.yaml
+        |   |-- gotk-sync.yaml
+        |   `-- kustomization.yaml
+        `-- namespaces
+            |-- monitoring
+            |   |-- apps
+            |   |   `-- grafana
+            |   |       |-- grafana-helmrelease.yaml
+            |   |       `-- grafana-repo.yaml
+            |   `-- monitoring-namespace.yaml
+            `-- webservers
+                |-- apps
+                |   `-- nginx-webserver
+                |       |-- nginx-webserver-helmrelease.yaml
+                |       `-- nginx-webserver-repo.yaml
+                `-- webservers-namespace.yaml
+
 The three files to create are:
 
 * One file defining the namespace
