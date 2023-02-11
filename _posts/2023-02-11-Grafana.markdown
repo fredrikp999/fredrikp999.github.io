@@ -1,0 +1,86 @@
+---
+layout: post
+title:  "Grafana setup in Kubernetes using Flux"
+date:   2023-02-11 15:00:10 +0000
+categories: homelab monitoring
+tags: homelab gitops flux monitoring grafana
+image:
+  path: https://media.discordapp.net/attachments/1059461993817448459/1072817422555418694/Fredrik999_djungle_party_d1c37ca1-d3b6-4445-b321-b4d802431346.png
+---
+Setting up Grafana in kubernetes using Flux + setting up some metrix sources
+
+References:
+* ...
+
+# Install Grafana using Flux
+## Prereqs
+* Kubernetes cluster (see other post)
+* Flux installed and setup for your cluster (see other post)
+
+## Flux manifests
+Create the following files in your runtime repo
+* Defining the namespace to be created by Flux
+```yaml
+# Kubernetes namespace for monitoring apps e.g. grafana
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: monitoring
+```
+
+* Defining the HelmRepo to pull grafana from Flux to pull from
+```yaml
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: grafana
+  namespace: monitoring
+spec:
+  interval: 1m0s
+  url: https://grafana.github.io/helm-charts
+```
+
+* Defining the HelmRelease for Flux to deploy
+* Note: Service is using type LoadBalancer instead of ClusterIP as in the default chart. This is due to my k3s setup which has an ingress which automatically expose service loadbalancers at a new IP in a specied range (see other post)
+```yaml
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: grafana
+  namespace: monitoring
+spec:
+  chart:
+    spec:
+      chart: grafana
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: HelmRepository
+        name: grafana
+      version: 6.50.7
+  interval: 1m0s
+  values:
+    service:
+      enabled: true
+      type: LoadBalancer
+      port: 80
+      targetPort: 3000
+```
+
+
+Commit to main and wait for reconciliation
+Check that grafana is up, e.g. by
+```shell
+watch kubectl get all -n monitoring
+```
+If all is well, you will see grafana coming up and the service being exposed on a cluster IP on a port
+
+## Set the admin password
+* Use "grafana-cli" to reset the admin password after a clean install
+* (The podname you need to find with kubectl get pods -n monitoring and use instead of grafana-755b...)
+```shell
+kubectl exec -n monitoring -it grafana-755b45bb7b-xz7m4 grafana-cli admin reset-admin-password myNewAdminPassword
+```
+# Configure sources and create a few graphs
+## Kubernetes monitoring
+## Argo monitoring
+## Home Assistant
