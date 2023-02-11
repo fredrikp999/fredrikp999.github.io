@@ -27,6 +27,7 @@ kind: Namespace
 metadata:
   name: monitoring
 ```
+{: file="./my-cluster/namespaces/monitoring/monitoring-namespace.yaml" }
 
 * Defining the HelmRepo to pull grafana from Flux to pull from
 ```yaml
@@ -39,6 +40,7 @@ spec:
   interval: 1m0s
   url: https://grafana.github.io/helm-charts
 ```
+{: file="./my-cluster/namespaces/monitoring/apps/grafana/grafana-repo.yaml" }
 
 * Defining the HelmRelease for Flux to deploy
 * Note: Service is using type LoadBalancer instead of ClusterIP as in the default chart. This is due to my k3s setup which has an ingress which automatically expose service loadbalancers at a new IP in a specied range (see other post)
@@ -65,6 +67,7 @@ spec:
       port: 80
       targetPort: 3000
 ```
+{: file="./my-cluster/namespaces/monitoring/apps/grafana/grafana-helmrelease.yaml" }
 
 
 Commit to main and wait for reconciliation
@@ -80,6 +83,7 @@ If all is well, you will see grafana coming up and the service being exposed on 
 ```shell
 kubectl exec -n monitoring -it grafana-755b45bb7b-xz7m4 grafana-cli admin reset-admin-password myNewAdminPassword
 ```
+
 # Configure sources and create a few graphs
 ## Kubernetes monitoring
 ## Argo monitoring
