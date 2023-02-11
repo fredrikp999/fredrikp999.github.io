@@ -5,7 +5,7 @@ date:   2023-02-11 15:00:10 +0000
 categories: homelab monitoring
 tags: homelab gitops flux monitoring grafana
 image:
-  path: https://media.discordapp.net/attachments/1059461993817448459/1072817422555418694/Fredrik999_djungle_party_d1c37ca1-d3b6-4445-b321-b4d802431346.png
+  path: https://media.discordapp.net/attachments/1059461993817448459/1071162019924951210/Fredrik999_big_snow_blower_inside_apartment_749b7b28-c8e4-4444-97d3-c10443bd12e9.png
 ---
 Setting up Grafana in kubernetes using Flux + setting up some metrix sources
 
