@@ -174,6 +174,73 @@ service/my-nginx   LoadBalancer   10.43.165.124   192.168.1.80   80:31945/TCP   
 You can now modify the file in git e.g. changing the helm chart version to 13.2.21 to see it changing in the cluster after a short wait
 
 When you have this working, you can move on to the next post which goes into more details e.g. on how to customize the deployment + later on also how to integrate the events with argo etc.
+Example of what a structure could look like:
+```
+.
+|-- clusters
+|   `-- my-cluster
+|       |-- flux-system
+|       |   |-- gotk-components.yaml
+|       |   |-- gotk-sync.yaml
+|       |   `-- kustomization.yaml
+|       `-- namespaces
+|           |-- argo
+|           |   |-- apps
+|           |   |   |-- argo-configmaps
+|           |   |   |   `-- artifact-references
+|           |   |   |       `-- artifact-repositories.yaml
+|           |   |   |-- argo-events
+|           |   |   |   `-- argo-events-helmrelease.yaml
+|           |   |   `-- argo-workflows
+|           |   |       `-- argo-workflows-helmrelease.yaml
+|           |   |-- argo-namespace.yaml
+|           |   |-- argo-repo.yaml
+|           |   |-- argo-sensors
+|           |   |   `-- argo-sensor-webhook.yaml
+|           |   `-- role-bindings
+|           |       |-- role-deployments-operator.yaml
+|           |       |-- rolebinding-for-operate-workflow-sa.yaml
+|           |       `-- serviceaccount-operate-workflow-sa.yaml
+|           |-- iot
+|           |   |-- apps
+|           |   |   |-- homeassistant
+|           |   |   |   |-- homeassistant-helmrelease.yaml
+|           |   |   |   `-- homeassistant-repo.yaml
+|           |   |   `-- mosquitto
+|           |   |       |-- mosquitto-helmrelease.yaml
+|           |   |       `-- mosquitto-repo.yaml
+|           |   `-- iot-namespace.yaml
+|           |-- monitoring
+|           |   |-- apps
+|           |   |   |-- grafana
+|           |   |   |   |-- grafana-helmrelease.yaml
+|           |   |   |   `-- grafana-repo.yaml
+|           |   |   `-- prometheus
+|           |   |       |-- prometheus-helmrelease.yaml
+|           |   |       `-- prometheus-repo.yaml
+|           |   `-- monitoring-namespace.yaml
+|           |-- system
+|           |   |-- apps
+|           |   |   |-- keycloak
+|           |   |   |   |-- bitnami-repo.yaml
+|           |   |   |   `-- keycloak-helmrelease.yaml
+|           |   |   `-- vault
+|           |   |       |-- hashicorp-repo.yaml
+|           |   |       `-- vault-helmrelease.yaml
+|           |   `-- system-namespace.yaml
+|           `-- webservers
+|               |-- apps
+|               |   `-- nginx-webserver
+|               |       |-- nginx-webserver-helmrelease.yaml
+|               |       `-- nginx-webserver-repo.yaml
+|               `-- webservers-namespace.yaml
+`-- temporary-removed-manifests
+    |-- nats
+    |   |-- nats-helmrelease.yaml
+    |   `-- nats-repo.yaml
+    `-- old-role.yaml
+```
+
 
 # More References
 [Nginx from bitnami](https://artifacthub.io/packages/helm/bitnami/nginx)
