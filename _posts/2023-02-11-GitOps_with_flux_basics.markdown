@@ -85,12 +85,6 @@ In the repo, create files in the cluster-folder which was created in the bootstr
         |   |-- gotk-sync.yaml
         |   `-- kustomization.yaml
         `-- namespaces
-            |-- monitoring
-            |   |-- apps
-            |   |   `-- grafana
-            |   |       |-- grafana-helmrelease.yaml
-            |   |       `-- grafana-repo.yaml
-            |   `-- monitoring-namespace.yaml
             `-- webservers
                 |-- apps
                 |   `-- nginx-webserver
