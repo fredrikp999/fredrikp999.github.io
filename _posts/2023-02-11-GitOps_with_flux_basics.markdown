@@ -5,7 +5,7 @@ date:   2023-02-11 09:00:10 +0000
 categories: homelab gitops
 tags: homelab gitops flux
 image:
-  path: https://media.discordapp.net/attachments/1059461993817448459/1072817422555418694/Fredrik999_djungle_party_d1c37ca1-d3b6-4445-b321-b4d802431346.png
+  path: https://media.discordapp.net/attachments/1059461993817448459/1074669795414384650/Fredrik999_a_futuristic_pipeline_in_the_style_of_Simon_stalenha_5de1eaa9-0e31-4089-8de5-9831c08c4b64.png
 ---
 Flux is a GitOps agent which e.g. can ensure that applications are consistency deployed according to a "wanted state" defined in a runtime git-repository. This post describe the basics for how to set this up
 
