@@ -150,6 +150,7 @@ kubectl get events -n flux-system --field-selector type=Warning
 flux get sources all -A
 ```
 Example output:
+
 ```
 NAMESPACE       NAME                            REVISION        SUSPENDED       READY   MESSAGE
 
