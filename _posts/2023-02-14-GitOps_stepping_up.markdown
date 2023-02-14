@@ -27,82 +27,74 @@ Example of a setup below. The example is still in one repo and simulating the tw
 * "namespaces"-folder simulates the "Core repo"
 * "user-owned"-folder simulates the "Other repo"
 Eventually I will separate these to two real repos, but during the early tests it is easier in one and the same repo.
-Also notice the folder "temporary-removed-manifests". This is a folder which is not monitored by Flux why it is convenient to temporary move things there when you want to keep it for reference but not deployed
 
 ```
 .
-|-- clusters
-|   `-- my-cluster
-|       |-- flux-system
-|       |   |-- gotk-components.yaml
-|       |   |-- gotk-sync.yaml
-|       |   `-- kustomization.yaml
-|       |-- namespaces
-|       |   |-- argo
-|       |   |   |-- apps
-|       |   |   |   |-- argo-events
-|       |   |   |   |   `-- argo-events-helmrelease.yaml
-|       |   |   |   `-- argo-workflows
-|       |   |   |       `-- argo-workflows-helmrelease.yaml
-|       |   |   |-- argo-namespace.yaml
-|       |   |   |-- argo-repo.yaml
-|       |   |   |-- configmaps
-|       |   |   |   `-- artifact-references
-|       |   |   |       `-- artifact-repositories.yaml
-|       |   |   `-- rolebindings
-|       |   |       |-- role-deployments-operator.yaml
-|       |   |       |-- rolebinding-for-operate-workflow-sa.yaml
-|       |   |       `-- serviceaccount-operate-workflow-sa.yaml
-|       |   |-- iot
-|       |   |   |-- apps
-|       |   |   |   |-- homeassistant
-|       |   |   |   |   |-- homeassistant-helmrelease.yaml
-|       |   |   |   |   `-- homeassistant-repo.yaml
-|       |   |   |   `-- mosquitto
-|       |   |   |       |-- mosquitto-helmrelease.yaml
-|       |   |   |       `-- mosquitto-repo.yaml
-|       |   |   `-- iot-namespace.yaml
-|       |   |-- monitoring
-|       |   |   |-- apps
-|       |   |   |   |-- grafana
-|       |   |   |   |   |-- grafana-helmrelease.yaml
-|       |   |   |   |   `-- grafana-repo.yaml
-|       |   |   |   `-- prometheus
-|       |   |   |       |-- prometheus-helmrelease.yaml
-|       |   |   |       `-- prometheus-repo.yaml
-|       |   |   `-- monitoring-namespace.yaml
-|       |   |-- system
-|       |   |   |-- apps
-|       |   |   |   |-- keycloak
-|       |   |   |   |   |-- bitnami-repo.yaml
-|       |   |   |   |   `-- keycloak-helmrelease.yaml
-|       |   |   |   `-- vault
-|       |   |   |       |-- hashicorp-repo.yaml
-|       |   |   |       `-- vault-helmrelease.yaml
-|       |   |   `-- system-namespace.yaml
-|       |   `-- webservers
-|       |       |-- apps
-|       |       |   `-- nginx-webserver
-|       |       |       |-- nginx-webserver-helmrelease.yaml
-|       |       |       `-- nginx-webserver-repo.yaml
-|       |       `-- webservers-namespace.yaml
-|       `-- user-owned
-|           |-- argo-eventsources
-|           |   |-- argo-eventsource-fkont-luminance.yaml
-|           |   |-- argo-eventsource-fkont-motion.yaml
-|           |   |-- argo-eventsource-foobar.yaml
-|           |   `-- argo-eventsource-webhook.yaml
-|           `-- argo-sensors
-|               |-- argo-sensor-fkont-luminance.yaml
-|               |-- argo-sensor-foobar.yaml
-|               `-- argo-sensor-webhook.yaml
-`-- temporary-removed-manifests
-    |-- example-configmap.yaml
-    |-- nats
-    |   |-- nats-helmrelease.yaml
-    |   `-- nats-repo.yaml
-    |-- old-role.yaml
-    `-- role-bindings
+`-- clusters
+    `-- my-cluster
+        |-- flux-system
+        |   |-- gotk-components.yaml
+        |   |-- gotk-sync.yaml
+        |   `-- kustomization.yaml
+        |-- namespaces
+        |   |-- argo
+        |   |   |-- apps
+        |   |   |   |-- argo-events
+        |   |   |   |   `-- argo-events-helmrelease.yaml
+        |   |   |   `-- argo-workflows
+        |   |   |       `-- argo-workflows-helmrelease.yaml
+        |   |   |-- argo-namespace.yaml
+        |   |   |-- argo-repo.yaml
+        |   |   |-- configmaps
+        |   |   |   `-- artifact-references
+        |   |   |       `-- artifact-repositories.yaml
+        |   |   `-- rolebindings
+        |   |       |-- role-deployments-operator.yaml
+        |   |       |-- rolebinding-for-operate-workflow-sa.yaml
+        |   |       `-- serviceaccount-operate-workflow-sa.yaml
+        |   |-- iot
+        |   |   |-- apps
+        |   |   |   |-- homeassistant
+        |   |   |   |   |-- homeassistant-helmrelease.yaml
+        |   |   |   |   `-- homeassistant-repo.yaml
+        |   |   |   `-- mosquitto
+        |   |   |       |-- mosquitto-helmrelease.yaml
+        |   |   |       `-- mosquitto-repo.yaml
+        |   |   `-- iot-namespace.yaml
+        |   |-- monitoring
+        |   |   |-- apps
+        |   |   |   |-- grafana
+        |   |   |   |   |-- grafana-helmrelease.yaml
+        |   |   |   |   `-- grafana-repo.yaml
+        |   |   |   `-- prometheus
+        |   |   |       |-- prometheus-helmrelease.yaml
+        |   |   |       `-- prometheus-repo.yaml
+        |   |   `-- monitoring-namespace.yaml
+        |   |-- system
+        |   |   |-- apps
+        |   |   |   |-- keycloak
+        |   |   |   |   |-- bitnami-repo.yaml
+        |   |   |   |   `-- keycloak-helmrelease.yaml
+        |   |   |   `-- vault
+        |   |   |       |-- hashicorp-repo.yaml
+        |   |   |       `-- vault-helmrelease.yaml
+        |   |   `-- system-namespace.yaml
+        |   `-- webservers
+        |       |-- apps
+        |       |   `-- nginx-webserver
+        |       |       |-- nginx-webserver-helmrelease.yaml
+        |       |       `-- nginx-webserver-repo.yaml
+        |       `-- webservers-namespace.yaml
+        `-- user-owned
+            |-- argo-eventsources
+            |   |-- argo-eventsource-fkont-luminance.yaml
+            |   |-- argo-eventsource-fkont-motion.yaml
+            |   |-- argo-eventsource-foobar.yaml
+            |   `-- argo-eventsource-webhook.yaml
+            `-- argo-sensors
+                |-- argo-sensor-fkont-luminance.yaml
+                |-- argo-sensor-foobar.yaml
+                `-- argo-sensor-webhook.yaml
 ```
 
 # Flux troubleshooting
