@@ -1,11 +1,11 @@
 ---
 layout: post
-title:  "GitOps with Flux, the basics"
+title:  "GitOps, stepping up"
 date:   2023-02-14 06:00:10 +0000
 categories: homelab gitops
 tags: homelab gitops flux
 image:
-  path: https://media.discordapp.net/attachments/1059461993817448459/1072817422555418694/Fredrik999_djungle_party_d1c37ca1-d3b6-4445-b321-b4d802431346.png
+  path: https://media.discordapp.net/attachments/1059461993817448459/1074708601979031592/Fredrik999_a_futuristic_pipeline_in_the_style_of_Simon_stalenha_6bcc9c3c-c4a3-4ec6-9534-4cfb23130711.png
 ---
 More advanced use of Flux / GitOps. Troubleshooting tips and more
 
