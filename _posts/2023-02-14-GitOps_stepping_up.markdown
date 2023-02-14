@@ -11,6 +11,7 @@ More advanced use of Flux / GitOps. Troubleshooting tips and more
 
 References:
 * [Flux troubleshooting cheatsheet](https://fluxcd.io/flux/cheatsheets/troubleshooting/)
+* [Ways of structuring your repositories](https://fluxcd.io/flux/guides/repository-structure/)
 
 # Flux repository strategies
 There are multiple options for how to setup your runtime repos for use with Flux. Which one work best depends on your use case, how many groups of people will work on the repos.
