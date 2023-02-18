@@ -11,6 +11,8 @@ Full CI & CD pipeline including flux. Auto-triggering image build using GitHub a
 
 References:
 * ...
+# Introduction
+TODO: Describe this better, now only some a start
 
 # Setup
 * GitHub repo with micro service source code (python, flask)
