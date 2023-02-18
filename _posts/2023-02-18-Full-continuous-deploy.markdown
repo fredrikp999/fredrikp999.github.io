@@ -12,9 +12,9 @@ Full CI & CD pipeline including flux. Auto-triggering image build using GitHub a
 References:
 * ...
 # Introduction
-TODO: Describe this better, now only some a start
+TODO: Describe this better, now only a draft outline
 
-# Setup
+## Overview
 * GitHub repo with micro service source code (python, flask)
 * Docker hub with micro service image built and pushed by GitHub actions
 * GitHub repo with app helmchart, using the micro service
@@ -24,7 +24,9 @@ TODO: Describe this better, now only some a start
 * Flux installed in the k8s-cluster, monitoring the above run-time repo
 * k8s-cluster where the application is installed
 
-## Jfrog manual (not needed if using flux, then specify in flux manifests instead)
+# Setups
+## Jfrog manual setup
+(not needed if using flux, then specify in flux manifests instead)
 * Create a helmchart repo in jfrog
 * Add helmchart repo (e.g. with name "my-jfrog" in example below)
 * Enable anonymous access (if you want that...) https://jfrog.com/knowledge-base/artifactory-how-to-grant-an-anonymous-user-access-to-specific-repositories/
@@ -39,6 +41,7 @@ helm repo add my-jfrog https://me.jfrog.io/artifactory/api/helm/charts-helm --us
 helm package .
 ```
 * Upload chart
+* Get SOMTLONGTOKEN from jfrog UI, then upload helmchart.tgz
 ```shell
 curl -ume@here.com:SOMELONGTOKEN -T ./myapp-0.1.0.tgz "https://me.jfrog.io/artifactory/charts-helm/myapp-0.1.0.tgz"
 ```
