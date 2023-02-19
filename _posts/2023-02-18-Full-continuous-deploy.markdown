@@ -18,7 +18,7 @@ TODO: Describe this better, now only a draft outline
 * GitHub repo with micro service source code (python, flask)
 * Docker hub with micro service image built and pushed by GitHub actions
 * GitHub repo with app helmchart, using the micro service
-* (Todo) GitHub action to build the csar and upload to Jfrog
+* (Todo) GitHub action to build the helm-chart-package and upload to Jfrog
 * Jfrog helmchart repo hosting the app helmchart
 * GitHub repo with runtime-repo, defining the wanted state of the kubernetes cluster
 * Flux installed in the k8s-cluster, monitoring the above run-time repo
@@ -54,6 +54,6 @@ curl -ume@here.com:SOMELONGTOKEN -T ./myapp-0.1.0.tgz "https://me.jfrog.io/artif
 * Setup with auto-updates for minor version updates only etc.
 * Better structure with tags, not using latest
 * Add more tests and tag at success etc.
-
+* Use other service than Jfrog as the free account is very limited, not sure what hit the roof quickly but perhaps the amount of requests from Flux?
 
 
