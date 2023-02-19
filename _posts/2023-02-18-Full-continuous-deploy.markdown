@@ -37,6 +37,7 @@ The following needs to be prepared
 # Setups
 ## GitHub actions for building and pushing micro service image
 * Create an action (CI) looking something like this in the repo (or add action from the github GUI)
+
 ```yaml
 name: Docker Image CI
 
@@ -63,6 +64,7 @@ jobs:
         docker push ${{ secrets.DOCKER_USERNAME }}/fred-infogetter:latest
 ```
 {: file=".github/workflows/docker-image.yml" }
+
 (TODO: Update so that image is tagged with a unique tag based on dateseconds as well as with latest. Also add tests, linting etc.)
 
 * Add secrets for your dockerhub account (DOCKER_PASSWORD and DOCKER_USERNAME)
