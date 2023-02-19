@@ -49,7 +49,7 @@ spec:
   mqtt:
     fkont-luminance:
       # mqtt broker url
-      url: tcp://192.168.1.86:1883
+      url: tcp://192.168.4.133:1883
       # name of the popic
       topic: homie/homey/fkont-sensor/measure-luminance
       # jsonBody specifies that all event body payload coming from this
