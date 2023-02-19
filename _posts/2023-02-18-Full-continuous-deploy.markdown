@@ -65,7 +65,7 @@ jobs:
 ```
 {: file=".github/workflows/docker-image.yml" }
 
-(TODO: Update so that image is tagged with a unique tag based on dateseconds as well as with latest. Also add tests, linting etc.)
+(TODO:  Update so that image is tagged with a unique tag based on dateseconds as well as with latest. Also add tests, linting etc.)
 
 * Add secrets for your dockerhub account (DOCKER_PASSWORD and DOCKER_USERNAME)
 
