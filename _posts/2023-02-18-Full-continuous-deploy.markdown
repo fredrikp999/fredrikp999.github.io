@@ -55,13 +55,12 @@ jobs:
     - uses: actions/checkout@v3
     - name: Build the Docker image
       run: |
-        dateseconds=`date +"%m%d%Y%H%M%S%N"`
-        docker build . --file Dockerfile --tag fred-infogetter:latest
+        docker build . --file Dockerfile --tag my-microservice:latest
     - name: Push image to Docker Hub
       run: |
         echo ${{ secrets.DOCKER_PASSWORD }} | docker login --username ${{ secrets.DOCKER_USERNAME }} --password-stdin
-        docker tag fred-infogetter:latest ${{ secrets.DOCKER_USERNAME }}/fred-infogetter:latest
-        docker push ${{ secrets.DOCKER_USERNAME }}/fred-infogetter:latest
+        docker tag my-microservice:latest ${{ secrets.DOCKER_USERNAME }}/my-microservice:latest
+        docker push ${{ secrets.DOCKER_USERNAME }}/my-microservice:latest
 ```
 {: file=".github/workflows/docker-image.yml" }
 
