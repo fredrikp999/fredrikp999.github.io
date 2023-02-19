@@ -7,13 +7,14 @@ tags: homelab gitops flux iot homeautomation
 image:
   path: https://media.discordapp.net/attachments/1059461993817448459/1072083046347583569/Fredrik999_big_gaps_30f02586-bef7-489b-9e29-448ae9cab653.png
 ---
-How to connect Home Automation on e.g. Homey and/or Home Assistant with Argo workflows using Argo events and MQTT
+As an example of how Argo events and workflows can be used, I created an integration with my home automation system. In the example, I connect Homey (and Home Assistant) with Argo workflows using Argo events and MQTT.
 
 References:
 * ...
 
 # Introduction
-JUST A DRAFT FOR NOW, TO BE DETAILED
+* Goal: Create a flow which is starting from a change in an IOT-sensor measuring how bright it is in a room, connecting this through the home automation server Homey, over to Argo which does some analysis and communicate back to Homey for it to do some action. All communication triggered by asynchronous events, using multiple protocols on multiple message busses
+* Flow goal: When it gets dark in the office, a message is sent on a Discord channel describing the situation
 
 # High level flow
 * Sensor, e.g. temperature/motion/luminance sensor (philips hue / Aquara etc) measure something
