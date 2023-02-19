@@ -11,6 +11,7 @@ How to connect Home Automation on e.g. Homey and/or Home Assistant with Argo wor
 
 References:
 * ...
+
 # Introduction
 JUST A DRAFT FOR NOW, TO BE DETAILED
 
@@ -30,7 +31,8 @@ JUST A DRAFT FOR NOW, TO BE DETAILED
 * As an example, Homey can with the help of an installed application send a message to a channel in Discord "Now the lights are off in the office. Perhaps someone is not working as they should"
 
 The above is of course not the most efficient way to do this, but it show how communication between the different systems can be made using an event-based setup.
-* More useful actions would be to do things which cannot be done already in Homey / Home Assistant, e.g. triggering CI/CD-pipelines which perhaps build, test, publish and auto-deploy a new version of a webpage when something happens in the house. 
+* More useful actions would be to do things which cannot be done already in Homey / Home Assistant, e.g. triggering CI/CD-pipelines which perhaps build, test, publish and auto-deploy a new version of a webpage when something happens in the house
+* As we can integrate to discord, and as we can invite other bots to that conversation - we can e.g. invite the midjourney-bot so that it can generate AI-pictures for us. By this we could do things like generating an image based on the "status in my house", e.g. based on which lights are on, at what dimlevel, with what colour + the temperature in the rooms, how many people are home, what is in their calenders right now etc. This url to this picture could then probably be picked up and used for updating a webpage showing the "current mood" or similar. Not useful but fun :)
 * A benefit is that using Argo Workflows, it is very easy to use any available docker-image and get something quite advanced done quickly compared to having to implement it is javascript in Homey
 * Executing the workflow in Argo also means that it is possible to use the full capacity of a k8s-cluster instead of being bound to the minimal memory of Homey. (However, it would be possible to just have a service running in k8s with a REST-API consumed from Homey if that would be easier)
 
