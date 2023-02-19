@@ -11,10 +11,12 @@ Full CI & CD pipeline including flux. Auto-triggering image build using GitHub a
 
 References:
 * ...
-# Introduction
-TODO: Describe this better, now only a draft outline
 
-## Overview
+# Introduction
+* This post describes how to setup a CI/CDD-flow which use a number of tools and repos to enable a completely automated flow
+* Starting from a new commit to a micro service, ending with an updated application with the new service deployed in a k8s-cluster with zero-touch
+
+# Overview of the flow
 * GitHub repo with micro service source code (python, flask)
 * Docker hub with micro service image built and pushed by GitHub actions
 * GitHub repo with app helmchart, using the micro service
@@ -24,7 +26,47 @@ TODO: Describe this better, now only a draft outline
 * Flux installed in the k8s-cluster, monitoring the above run-time repo
 * k8s-cluster where the application is installed
 
+# Pre-requisites
+The following needs to be prepared
+## Github repo with source code for the micro service
+## Github repo with source code for the application helm chart
+## Docker registry for the micro service image
+## Helm-chart repository e.g. at Jfrog / AWS / GCP / Local
+## K8s-cluster with Flux
+
 # Setups
+## GitHub actions for building and pushing micro service image
+* Create an action (CI) looking something like this in the repo (or add action from the github GUI)
+```yaml
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: |
+        dateseconds=`date +"%m%d%Y%H%M%S%N"`
+        docker build . --file Dockerfile --tag fred-infogetter:latest
+    - name: Push image to Docker Hub
+      run: |
+        echo ${{ secrets.DOCKER_PASSWORD }} | docker login --username ${{ secrets.DOCKER_USERNAME }} --password-stdin
+        docker tag fred-infogetter:latest ${{ secrets.DOCKER_USERNAME }}/fred-infogetter:latest
+        docker push ${{ secrets.DOCKER_USERNAME }}/fred-infogetter:latest
+```
+{: file=".github/workflows/docker-image.yml" }
+(TODO: Update so that image is tagged with a unique tag based on dateseconds as well as with latest. Also add tests, linting etc.)
+
+* Add secrets for your dockerhub account (DOCKER_PASSWORD and DOCKER_USERNAME)
+
 ## Jfrog manual setup
 (not needed if using flux, then specify in flux manifests instead)
 * Create a helmchart repo in jfrog
@@ -32,10 +74,15 @@ TODO: Describe this better, now only a draft outline
 * Enable anonymous access (if you want that...) https://jfrog.com/knowledge-base/artifactory-how-to-grant-an-anonymous-user-access-to-specific-repositories/
 * Config->Platform Security-> "Allow anonymous access"
 * To restrict access for anonymous only to specific repos: User Managent->Permissions. Add/change permission for specific repos/patterns
+
+## If not using Flux but instead executing helm "manually" (or for testing)
 * Add repo reference to helm client
 ```shell
 helm repo add my-jfrog https://me.jfrog.io/artifactory/api/helm/charts-helm --username me@here.com --password SOMELONGTOKEN
 ```
+
+## Package and upload helmchart
+(TODO: Automate this part in github actions for the helm chart repo. For now manual)
 * Package helmchart
 ```shell
 helm package .
@@ -50,6 +97,9 @@ curl -ume@here.com:SOMELONGTOKEN -T ./myapp-0.1.0.tgz "https://me.jfrog.io/artif
 ...
 
 # ToDo
+## Describe better in this post
+* Expand the steps and/or reference other posts with the details
+## Improve the implementation and flow
 * Build (helm package .) and push to jfrog
 * Setup with auto-updates for minor version updates only etc.
 * Better structure with tags, not using latest
