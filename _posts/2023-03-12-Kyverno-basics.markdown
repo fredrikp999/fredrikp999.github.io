@@ -5,7 +5,7 @@ date:   2023-03-12 15:00:10 +0000
 categories: homelab security
 tags: homelab security kyverno policy
 image:
-  path: https://media.discordapp.net/attachments/1059461993817448459/1072083046347583569/Fredrik999_big_gaps_30f02586-bef7-489b-9e29-448ae9cab653.png
+  path: https://media.discordapp.net/attachments/1059461993817448459/1083715852727234600/Fredrik999_a_secrets_vault_27c083fd-e6d3-4930-b9c2-034e3416cb95.png
 ---
 Applying the principle of "Policy as code" is an efficient way to add one layer of security to your kubernetes cluster. There are mainly two mature tools in CNCF, OPA Gatekeeper and Kyverno. Kyverno is the more modern and the one I will explore here.
 
