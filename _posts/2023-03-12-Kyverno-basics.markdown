@@ -223,7 +223,7 @@ kubectl get polr/cpol-disallow-latest-tag -o yaml
 ```
 
 This can give something like
-```
+```yaml
 apiVersion: wgpolicyk8s.io/v1alpha2
 kind: PolicyReport
 metadata:
