@@ -23,7 +23,7 @@ Either install using helm, follow:
 * [Kyverno helmchart](https://artifacthub.io/packages/helm/kyverno/kyverno)
 
 ## GitOps, Flux
-Or if you want to handle using gitOps in Flux, create one repo and helmrelease file
+Or if you want to handle using gitOps in Flux, create file(s) for the repo and the helmrelease
 
 ```yaml
 apiVersion: source.toolkit.fluxcd.io/v1beta2
@@ -276,3 +276,16 @@ kyverno apply /path/to/policy.yaml --cluster
 ```
 
 See more examples in the official documentation
+
+# What things could we create policies for?
+Some examples:
+* Do not allow using "latest" image versions
+* Do not allow unsigned images
+* Do not allow images older than x months
+* Do not allow images which have bad security scores
+* Only allow creation of resources if adding labels per a specific pattern
+* Only allow creating certain resources in specific namespaces
+* Only allow proper securityContext
+* Only allow images from specific local registries
+* Only allow Argo workflows which has specified acceptable TTL
+* Only allow certain base images
