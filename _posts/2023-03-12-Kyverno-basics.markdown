@@ -122,6 +122,18 @@ After having create the policy (see further down), test the policy with
 kubectl create deployment nginx --image=nginx:latest
 ```
 
+This would give something like
+```
+error: failed to create deployment: admission webhook "validate.kyverno.svc-fail" denied the request:
+
+policy Deployment/default/nginx for resource violation:
+
+disallow-latest-tag:
+  autogen-validate-image-tag: 'validation error: Using a mutable image tag e.g. ''latest''
+    is not allowed. rule autogen-validate-image-tag failed at path /spec/template/spec/containers/0/image/'
+```
+
+
 ## Require Signed Tekton Pipeline
 Require that the pipeline is signed
 ```yaml
